@@ -10,8 +10,8 @@ class Person < Nameable
     @rentals = []
   end
 
-  attr_reader :id, :rentals
-  attr_accessor :name, :age
+  attr_reader :id
+  attr_accessor :name, :age, :rentals
 
   def of_age?
     @age.to_i >= 18
@@ -25,8 +25,8 @@ class Person < Nameable
     @name
   end
 
-  def add_rentals(rental)
-    @rentals << rental
+  def add_rentals(book, date)
+    Rental.new(date, self, book)
   end
 
   private :of_age?
