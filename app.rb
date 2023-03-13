@@ -55,7 +55,7 @@ class App
   end
 
   def create_student
-    student_details = get_student_details
+    student_details = fetch_student_details
     each_student = Student.new(student_details[:age], student_details[:name], student_details[:parent_permission])
     @people << each_student
     puts 'Person created successfully'
@@ -72,7 +72,7 @@ class App
   end
 
   def create_teacher
-    teacher_details = get_teacher_details
+    teacher_details = fetch_teacher_details
     each_teacher = Teacher.new(teacher_details[:age], teacher_details[:specialization], teacher_details[:name])
     @people << each_teacher
     puts 'Person created successfully'
@@ -87,7 +87,7 @@ class App
   end
 
   def create_book
-    book_details = get_book_details
+    book_details = fetch_book_details
     each_book = Book.new(book_details[:title], book_details[:author])
     @books << each_book
     puts 'Book created successfully'
@@ -126,7 +126,7 @@ class App
     elsif @people.empty?
       puts 'Person array is empty'
     else
-      rental_details = get_rental_details
+      rental_details = fetch_rental_details
 
       rental = Rental.new(rental_details[:date], rental_details[:people], rental_details[:books])
 
