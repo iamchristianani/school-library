@@ -44,14 +44,14 @@ class App
     end
   end
 
-  def get_student_details
+  def fetch_student_details
     print 'Age: '
     age = gets.chomp.to_i
     print 'Name: '
     name = gets.chomp
     print 'Has parent permission? [Y/N]: '
     parent_permission = gets.chomp
-    return { age: age, name: name, parent_permission: parent_permission }
+    { age: age, name: name, parent_permission: parent_permission }
   end
 
   def create_student
@@ -61,14 +61,14 @@ class App
     puts 'Person created successfully'
   end
 
-  def get_teacher_details
+  def fetch_teacher_details
     print 'Age: '
     age = gets.chomp.to_i
     print 'Name: '
     name = gets.chomp
     print 'Specialization: '
     specialization = gets.chomp
-    return { age: age, name: name, specialization: specialization }
+    { age: age, name: name, specialization: specialization }
   end
 
   def create_teacher
@@ -78,12 +78,12 @@ class App
     puts 'Person created successfully'
   end
 
-  def get_book_details
+  def fetch_book_details
     print 'Title: '
     title = gets.chomp
     print 'Author: '
     author = gets.chomp
-    return { title: title, author: author }
+    { title: title, author: author }
   end
 
   def create_book
@@ -107,7 +107,7 @@ class App
     end
   end
 
-  def get_rental_details
+  def fetch_rental_details
     display_books
     rental_book = gets.chomp.to_i
 
@@ -117,7 +117,7 @@ class App
     print 'Date: '
     date = gets.chomp
 
-    return { date: date, people: @people[rental_person], books: @books[rental_person]}
+    { date: date, people: @people[rental_person], books: @books[rental_book] }
   end
 
   def create_rental
