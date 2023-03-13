@@ -6,3 +6,5 @@ def main
   menu = Menu.new(app)
   menu.start
 end
+
+main

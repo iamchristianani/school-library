@@ -15,7 +15,7 @@ class App
 
   def list_books
     if @books.empty?
-      puts "There are no books"
+      puts 'There are no books'
     else
       @books.each do |each_book|
         puts "Title: \"#{each_book.title}\", Author: \"#{each_book.author}\""
@@ -25,7 +25,7 @@ class App
 
   def list_people
     if @people.empty?
-      puts "There are no people"
+      puts 'There are no people'
     else
       @people.each do |each_person|
         puts "Name: #{each_person.name}, ID: #{each_person.id}, Age: #{each_person.age}"
@@ -36,9 +36,10 @@ class App
   def create_person
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     number = gets.chomp.to_i
-    if number == 1
+    case number
+    when 1
       create_student
-    elsif number == 2
+    when 2
       create_teacher
     end
   end
