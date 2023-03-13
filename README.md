@@ -28,7 +28,7 @@ After you're finished please remove all the comments and instructions!
 # 📗 Table of Contents
 
 - [📗 Table of Contents](#-table-of-contents)
-- [📖 School Library ](#-about-project-)
+- [📖 \[School Library\] ](#-school-library-)
   - [🛠 Built With ](#-built-with-)
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
@@ -107,13 +107,19 @@ To run the project, execute the following command:
 
 <!-- AUTHORS -->
 
-## 👥 Author <a name="authors"></a>
+## 👥 Authors <a name="authors"></a>
 
 👤 **Christian Ani**
 
 - GitHub: [@iamchristianani](https://github.com/iamchristianani)
 - Twitter: [@kriznode](https://twitter.com/kriznode)
 - LinkedIn: [Christian Ani](https://www.linkedin.com/in/anikriz/)
+
+**Leehaney George**
+
+- GitHub: [@githubhandle](https://github.com/leehaney254)
+- Twitter: [@twitterhandle](https://twitter.com/Lee06785586)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/leehaney-george-0a4a51178/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
