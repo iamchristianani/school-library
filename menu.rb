@@ -7,6 +7,7 @@ class Menu
   def menu
     puts
     puts 'Please choose an option by entering a number'
+    @app.fetch_all_data
     @list = {
       1 => 'List all books',
       2 => 'List all people',
@@ -38,7 +39,7 @@ class Menu
       when 6
         @app.list_rental_of_person
       when 7
-        puts 'Thank you for using this app!'
+        @app.save_on_exit
         exit
       else
         puts 'Please choose a number between 1 and 7'
