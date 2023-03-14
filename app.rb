@@ -5,12 +5,19 @@ require './classroom'
 require './student'
 require './teacher'
 require './nameable'
+require './save'
+require './read_data'
 
 class App
   def initialize
     @books = []
     @people = []
     @rentals = []
+  end
+
+  def fetch_all_data
+    people_data = ReadData.new
+    @people << people_data.read_data("people.json")
   end
 
   def list_books
@@ -150,4 +157,14 @@ class App
       end
     end
   end
+
+  def save_on_exit
+    puts 'Thank you for using this app!'
+    puts @people
+    new_save = Save.new()
+    new_save.save_file(@people, "people.json") if !@people.empty? 
+    new_save.save_file(@books, "books.json") if !@books.empty? 
+    new_save.save_file(@rentals, "rentals.json") if !@rentals.empty? 
+  end
+
 end
