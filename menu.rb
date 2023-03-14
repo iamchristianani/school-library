@@ -7,7 +7,6 @@ class Menu
   def menu
     puts
     puts 'Please choose an option by entering a number'
-    @app.fetch_all_data
     @list = {
       1 => 'List all books',
       2 => 'List all people',

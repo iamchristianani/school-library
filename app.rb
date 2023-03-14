@@ -17,7 +17,7 @@ class App
 
   def fetch_all_data
     people_data = ReadData.new
-    @people << people_data.read_data("people.json")
+    @people = people_data.read_data("people.json")
   end
 
   def list_books
@@ -35,7 +35,7 @@ class App
       puts 'There are no people'
     else
       @people.each do |each_person|
-        puts "Name: #{each_person.name}, ID: #{each_person.id}, Age: #{each_person.age}"
+        puts "[#{each_person['class']}] Name: #{each_person['name']}, ID: #{each_person['id']}, Age: #{each_person['age']}"
       end
     end
   end
@@ -64,7 +64,12 @@ class App
   def create_student
     student_details = fetch_student_details
     each_student = Student.new(student_details[:age], student_details[:name], student_details[:parent_permission])
-    @people << each_student
+    student_hash = { 
+      'class' => each_student.class, 
+      'name' => each_student.name,
+      'id' => each_student.id, 
+      'age' => each_student.age }
+    @people << student_hash
     puts 'Person created successfully'
   end
 
@@ -81,7 +86,12 @@ class App
   def create_teacher
     teacher_details = fetch_teacher_details
     each_teacher = Teacher.new(teacher_details[:age], teacher_details[:specialization], teacher_details[:name])
-    @people << each_teacher
+    teacher_hash = { 
+      'age' => each_teacher.age, 
+      'class' => each_teacher.class,
+      'name' => each_teacher.name, 
+      'id'=> each_teacher.id}
+    @people << teacher_hash
     puts 'Person created successfully'
   end
 
@@ -160,11 +170,10 @@ class App
 
   def save_on_exit
     puts 'Thank you for using this app!'
-    puts @people
     new_save = Save.new()
     new_save.save_file(@people, "people.json") if !@people.empty? 
-    new_save.save_file(@books, "books.json") if !@books.empty? 
-    new_save.save_file(@rentals, "rentals.json") if !@rentals.empty? 
+    # new_save.save_file(@books, "books.json") if !@books.empty? 
+    # new_save.save_file(@rentals, "rentals.json") if !@rentals.empty? 
   end
 
 end

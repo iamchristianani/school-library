@@ -12,6 +12,3 @@ class ReadData
     end
   end
 end
-
-# read_file = ReadData.new
-# puts read_file.read_data("people.json")
