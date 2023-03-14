@@ -18,6 +18,7 @@ class App
   def fetch_all_data
     people_data = ReadData.new
     @people = people_data.read_data("people.json")
+    @books = people_data.read_data('books.json')
   end
 
   def list_books
@@ -25,7 +26,7 @@ class App
       puts 'There are no books'
     else
       @books.each do |each_book|
-        puts "Title: \"#{each_book.title}\", Author: \"#{each_book.author}\""
+        puts "Title: \"#{each_book['title']}\", Author: \"#{each_book['author']}\""
       end
     end
   end
@@ -106,7 +107,11 @@ class App
   def create_book
     book_details = fetch_book_details
     each_book = Book.new(book_details[:title], book_details[:author])
-    @books << each_book
+    book_hash = { 
+      'title' => each_book.title,
+      'author' => each_book.author
+    }
+    @books << book_hash
     puts 'Book created successfully'
   end
 
@@ -172,7 +177,7 @@ class App
     puts 'Thank you for using this app!'
     new_save = Save.new()
     new_save.save_file(@people, "people.json") if !@people.empty? 
-    # new_save.save_file(@books, "books.json") if !@books.empty? 
+    new_save.save_file(@books, "books.json") if !@books.empty? 
     # new_save.save_file(@rentals, "rentals.json") if !@rentals.empty? 
   end
 
