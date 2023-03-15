@@ -5,6 +5,8 @@ require './classroom'
 require './student'
 require './teacher'
 require './nameable'
+require './save'
+require './read_data'
 
 class App
   def initialize
@@ -28,7 +30,7 @@ class App
       puts 'There are no people'
     else
       @people.each do |each_person|
-        puts "Name: #{each_person.name}, ID: #{each_person.id}, Age: #{each_person.age}"
+        puts "[#{each_person.class}] Name: #{each_person.name}, ID: #{each_person.id}, Age: #{each_person.age}"
       end
     end
   end
@@ -114,7 +116,7 @@ class App
     display_people
     rental_person = gets.chomp.to_i
 
-    print 'Date: '
+    print 'Date(DD/MM/YYYY): '
     date = gets.chomp
 
     { date: date, people: @people[rental_person], books: @books[rental_book] }
@@ -141,13 +143,108 @@ class App
     else
       print 'ID of person: '
       person_id = gets.chomp.to_i
-
+      puts 'Rentals:'
       @rentals.each do |rental|
         if rental.person.id == person_id
-          puts 'Rentals: '
           puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author}"
         end
       end
     end
+  end
+
+  def student_hash(array)
+    new_array = []
+    array.each do |item|
+      item_hash = if item.instance_of?(Student)
+                    {
+                      'class' => item.class,
+                      'name' => item.name,
+                      'id' => item.id
+                    }
+                  else
+                    {
+                      'age' => item.age,
+                      'class' => item.class,
+                      'name' => item.name
+                    }
+                  end
+      new_array << item_hash
+    end
+    new_array
+  end
+
+  def book_hash(arr)
+    new_array = []
+    arr.each do |item|
+      book_hash = {
+        'title' => item.title,
+        'author' => item.author
+      }
+      new_array << book_hash
+    end
+    new_array
+  end
+
+  def rental_hash(arr)
+    new_array = []
+    arr.each do |item|
+      rental_hash = {
+        'date' => item.date,
+        'person' => item.person.name,
+        'books' => item.book.title
+      }
+      new_array << rental_hash
+    end
+    new_array
+  end
+
+  def save_on_exit
+    puts 'Thank you for using this app!'
+    new_save = Save.new
+    new_save.save_file(student_hash(@people), 'people.json') unless @people.empty?
+    new_save.save_file(book_hash(@books), 'books.json') unless @books.empty?
+    new_save.save_file(rental_hash(@rentals), 'rentals.json') unless @rentals.empty?
+  end
+
+  def people_class(arr)
+    new_array = []
+    arr.each do |item|
+      person = if item['class'] == 'Student'
+                 Student.new(item['age'], item['name'], item['parent_permission'])
+               else
+                 Teacher.new(item['age'], item['specialization'], item['name'])
+               end
+      new_array << person
+    end
+    new_array
+  end
+
+  def book_class(arr)
+    new_array = []
+    arr.each do |item|
+      new_array << Book.new(item['title'], item['author'])
+    end
+    new_array
+  end
+
+  def rental_class(arr)
+    new_array = []
+    arr.each do |item|
+      @people.each do |person|
+        next unless item['person'] == person.name
+
+        @books.each do |book|
+          new_array << Rental.new(item['date'], person, book) if item['books'] == book.title
+        end
+      end
+    end
+    new_array
+  end
+
+  def fetch_all_data
+    people_data = ReadData.new
+    @people = people_class(people_data.read_data('people.json'))
+    @books = book_class(people_data.read_data('books.json'))
+    @rentals = rental_class(people_data.read_data('rentals.json'))
   end
 end

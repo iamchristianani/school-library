@@ -38,7 +38,7 @@ class Menu
       when 6
         @app.list_rental_of_person
       when 7
-        puts 'Thank you for using this app!'
+        @app.save_on_exit
         exit
       else
         puts 'Please choose a number between 1 and 7'
