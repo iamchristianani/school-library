@@ -25,13 +25,8 @@ class Person < Nameable
     @name
   end
 
-  def add_rentals(book, date)
-    Rental.new(date, self, book)
-  end
-
   def add_rental(rental)
-    @rental ||= []
-    @rental << rental
+    @rentals << rental
   end
 
   private :of_age?
