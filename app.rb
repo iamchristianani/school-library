@@ -153,28 +153,28 @@ class App
   end
 
   def student_hash(array)
-    new_array  = []
+    new_array = []
     array.each do |item|
-      if item.class == 'Student'
-        item_hash = {
-        'class' => item.class,
-        'name' => item.name,
-        'id' => item.id
-        }
-      else
-        item_hash = {
-          'age' => item.age,
-          'class' => item.class,
-          'name' => item.name
-        }
-      end
+      item_hash = if item.instance_of?('Student')
+                    {
+                      'class' => item.class,
+                      'name' => item.name,
+                      'id' => item.id
+                    }
+                  else
+                    {
+                      'age' => item.age,
+                      'class' => item.class,
+                      'name' => item.name
+                    }
+                  end
       new_array << item_hash
     end
     new_array
   end
 
   def book_hash(arr)
-    new_array  = []
+    new_array = []
     arr.each do |item|
       book_hash = {
         'title' => item.title,
@@ -193,7 +193,7 @@ class App
         'person' => item.person.name,
         'books' => item.book.title
       }
-     new_array << rental_hash
+      new_array << rental_hash
     end
     new_array
   end
@@ -203,17 +203,17 @@ class App
     new_save = Save.new
     new_save.save_file(student_hash(@people), 'people.json') unless @people.empty?
     new_save.save_file(book_hash(@books), 'books.json') unless @books.empty?
-    new_save.save_file(rental_hash(@rentals), "rentals.json") if !@rentals.empty?
+    new_save.save_file(rental_hash(@rentals), 'rentals.json') unless @rentals.empty?
   end
 
   def people_class(arr)
     new_array = []
     arr.each do |item|
-      if item['class'] == 'Student'
-        person = Student.new(item['age'], item['name'], item['parent_permission'])
-      else
-        person = Teacher.new(item['age'], item['specialization'], item['name'])
-      end
+      person = if item['class'] == 'Student'
+                 Student.new(item['age'], item['name'], item['parent_permission'])
+               else
+                 Teacher.new(item['age'], item['specialization'], item['name'])
+               end
       new_array << person
     end
     new_array
@@ -231,14 +231,12 @@ class App
     new_array = []
     arr.each do |item|
       @people.each do |person|
-        if item['person'] == person.name
-          @books.each do |book|
-            if item['books'] == book.title
-              new_array << Rental.new(item['date'], person, book)
-            end
-          end
+        next unless item['person'] == person.name
+
+        @books.each do |book|
+          new_array << Rental.new(item['date'], person, book) if item['books'] == book.title
         end
-      end 
+      end
     end
     new_array
   end

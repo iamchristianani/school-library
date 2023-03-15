@@ -30,7 +30,7 @@ class Person < Nameable
   end
 
   def add_rental(rental)
-    @rental ||= [] 
+    @rental ||= []
     @rental << rental
   end
 

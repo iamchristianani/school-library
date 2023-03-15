@@ -5,7 +5,7 @@ class Rental
     @date = date
     @book = book
     @person = person
-    
+
     book.add_rented(self)
     person.add_rental(self)
   end
