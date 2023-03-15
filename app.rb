@@ -120,14 +120,14 @@ class App
   def display_books
     puts 'Select a book from the following list by number'
     @books.each_with_index do |book, index|
-      puts "#{index.to_i}) Title: \"#{book.title}\" Author: #{book.author}"
+      puts "#{index.to_i}) Title: \"#{book['title']}\" Author: #{book['author']}"
     end
   end
 
   def display_people
     puts 'Select a person from the following list by number (not id)'
     @people.each_with_index do |person, index|
-      puts "#{index.to_i}) Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index.to_i}) Name: #{person['name']}, ID: #{person['id']}, Age: #{person['age']}"
     end
   end
 
@@ -138,10 +138,10 @@ class App
     display_people
     rental_person = gets.chomp.to_i
 
-    print 'Date: '
+    print 'Date (DD/MM/YYYY): '
     date = gets.chomp
 
-    { date: date, people: @people[rental_person], books: @books[rental_book] }
+    { date: date, people: @people[rental_person], books_author: @books[rental_book] }
   end
 
   def create_rental
@@ -151,17 +151,24 @@ class App
       puts 'Person array is empty'
     else
       rental_details = fetch_rental_details
+      books_details = rental_details[:books_author]
+      rented_book =  Book.new(books_details['title'], books_details['author'])
 
-      rental = Rental.new(rental_details[:date], rental_details[:people], rental_details[:books])
+      rental = Rental.new(rental_details[:date], rental_details[:people], rented_book)
+      rental_hash = {
+        'date' => rental.date,
+        'people' => rental.people,
+        'books' => rental.books
+      }
 
-      @rentals << rental
+      @rentals << rental_hash
       puts 'Rental created successfully'
     end
   end
 
   def list_rental_of_person
     if @rentals.empty?
-      'Rental is empty'
+      puts 'Rental is empty'
     else
       print 'ID of person: '
       person_id = gets.chomp.to_i
@@ -169,7 +176,7 @@ class App
       @rentals.each do |rental|
         if rental.person.id == person_id
           puts 'Rentals: '
-          puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author}"
+          puts "Date: #{rental['date']}, Book: \"#{rental.book['title']}\" by #{rental['book'].author}"
         end
       end
     end
