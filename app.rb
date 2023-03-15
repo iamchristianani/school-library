@@ -155,7 +155,7 @@ class App
   def student_hash(array)
     new_array = []
     array.each do |item|
-      item_hash = if item.instance_of?('Student')
+      item_hash = if item.instance_of?(Student)
                     {
                       'class' => item.class,
                       'name' => item.name,
