@@ -1,14 +1,13 @@
 require 'spec_helper'
 
 describe Rental do
-
   before :each do
     @person = Person.new(28, 'Christian Ani', parent_permission: true)
-    @book = Book.new("Things Fall Apart", "Chinua Achebe")
+    @book = Book.new('Things Fall Apart', 'Chinua Achebe')
     @rental = Rental.new('12/12/2023', @person, @book)
-  end 
+  end
 
-  context  "When creating a rental class" do
+  context 'When creating a rental class' do
     it 'Should return a new rental' do
       expect(@rental).to be_an_instance_of Rental
     end

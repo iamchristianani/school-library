@@ -1,18 +1,17 @@
 require 'spec_helper'
 
-describe Teacher do 
-
+describe Teacher do
   before :each do
     @teacher = Teacher.new(45, 'English', 'Martin King', parent_permission: true)
-  end 
+  end
 
-  context  "When creating a teacher class" do
+  context 'When creating a teacher class' do
     it 'Should return a new Teacher' do
       expect(@teacher).to be_an_instance_of Teacher
     end
 
     it 'Should raise an error' do
-      expect {Teacher.new(45, 'English', parent_permission: true)}.to raise_error(ArgumentError)
+      expect { Teacher.new(45, 'English', parent_permission: true) }.to raise_error(ArgumentError)
     end
 
     it 'Should return a true value' do
